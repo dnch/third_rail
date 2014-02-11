@@ -1,6 +1,7 @@
 Bundler.require(:default, :development)
 
+require 'active_support/core_ext/string'
+
 require 'rspec'
-require 'tilt'
 require 'third_rail'
 
