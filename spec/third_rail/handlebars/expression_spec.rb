@@ -45,6 +45,16 @@ describe ThirdRail::Handlebars::Expression do
   end
 
   context "when passed a block" do
+    it "returns a correctly formatted block expression with the result of the block" do
+      input = described_class.new(:list).to_s { "..." }
+      output = "{{#list}}...{{/list}}"
+      expect(input.to_s).to eql output
+    end
+
+    it "it returns a block expression including arguments" do
+      input = described_class.new(:list, 42).to_s { "..." }
+      output = "{{#list 42}}...{{/list}}"
+    end
   end
 
 
