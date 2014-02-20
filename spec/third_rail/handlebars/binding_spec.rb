@@ -10,12 +10,6 @@ require 'spec_helper'
 #   {{foo}} vs  {{{foo}}}
 #
 # * block expressions
-#
-#   {{#list people}}
-#     {{firstName}}
-#   {{#list}}
-#
-#
 #   {{#if cond}}
 #   {{else}}
 #   {{/end}}
@@ -27,10 +21,6 @@ require 'spec_helper'
 #
 #   {{./name}} == {{this/name}} == {{this.name}}
 #
-# * helper methods
-#
-#   {{derpMethod fooBar}}
-#
 # * iterator methods
 #
 #   {{@first}}, {{@last}}, {{@index}}, {{@key}}
@@ -39,7 +29,10 @@ require 'spec_helper'
 
 describe ThirdRail::Handlebars::Binding do
   def render(template)
-    Tilt::ERBTemplate.new { template }.render(subject)
+
+    _buffer_name = '@_third_rail_output_buffer'
+
+    Tilt::ErubisTemplate.new(outvar: _buffer_name) { template }.render(described_class.new(outvar: _buffer_name))
   end
 
   # it "converts under_scored references to camelCase"
@@ -74,9 +67,14 @@ describe ThirdRail::Handlebars::Binding do
     end
   end
 
+  it "renders block expressions" do
+    template = "<div><% list(people) do %><%= firstName %><% end %></div>"
+    output   = "<div>{{#list people}}{{firstName}}{{/list}}</div>"
+
+    expect(render(template)).to eql output
+  end
 
 
-  # it "renders block expressions"
   # it "renders block expressions with reserved Ruby words"
 
   # it "resolves paths"

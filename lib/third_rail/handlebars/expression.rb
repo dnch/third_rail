@@ -19,7 +19,7 @@ module ThirdRail::Handlebars
       literal
     end
 
-    def to_s
+    def to_s(&block)
       String.new.tap do |s|
         s << "{{"
         s << "#" if block_given?
