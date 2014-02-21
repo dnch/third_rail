@@ -57,17 +57,15 @@ describe ThirdRail::Handlebars::Expression do
     end
   end
 
+  context "when called in a method chain" do
+    it "concatenates each method call with a full-stop" do
+
+      input  = described_class.new(:token).herp.derp.purple
+      output = "{{token.herp.derp.purple}}"
+
+      expect(input.to_s).to eql output
+    end
+  end
 
 
-
-
-
-
-  # it "can be a block-opener" do
-  #   expect(described_class.new(:token, block_opener: true)).to eql "{{#token}}"
-  # end
-
-  # it "can be a block-closer" do
-  #   expect(described_class.new(:token, block_closer: true)).to eql "{{/token}}"
-  # end
 end

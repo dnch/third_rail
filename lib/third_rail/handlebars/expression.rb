@@ -1,7 +1,7 @@
 module ThirdRail::Handlebars
   class Expression
 
-    attr_reader :literal, :args, :options, :block
+    attr_reader :tokens, :args, :options, :block
 
     # # use when calling chained expressions from binding
     # def method_missing(token)
@@ -9,21 +9,32 @@ module ThirdRail::Handlebars
     #   self
     # end
 
-    def initialize(literal, *args, **options)
-      @literal = literal.to_s
+    def initialize(first_token, *args)
+      @tokens  = [first_token.to_s]
       @args    = args
-      @options = options
     end
+
+    def method_missing(token)
+      tokens << token.to_s
+      self
+    end
+
+    # def to_hash
+
+    #   raise "Derp!"
+
+    #   nil
+    # end
 
     def to_literal
-      literal
+      tokens.first
     end
 
-    def to_s(&block)
+    def to_str(&block)
       String.new.tap do |s|
         s << "{{"
         s << "#" if block_given?
-        s << literal
+        s << tokens.join(".")
 
         unless args.empty?
           s << " "
@@ -36,17 +47,19 @@ module ThirdRail::Handlebars
           s << yield
           s << "{{"
           s << "/"
-          s << literal
+          s << tokens.join(".")
           s << "}}"
         end
       end
     end
 
+    alias :to_s :to_str
+
     private
 
     def escape_arg(arg)
       case arg
-      when Expression                     then arg.literal
+      when Expression                     then arg.to_literal
       when String                         then "\"#{arg}\""
       when Numeric, TrueClass, FalseClass then arg.to_s
       when NilClass                       then "null"
