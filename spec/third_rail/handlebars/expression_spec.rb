@@ -67,5 +67,10 @@ describe ThirdRail::Handlebars::Expression do
     end
   end
 
+  it "composes segment-literal expressions using Ruby syntax" do
+    input  = described_class.new(:token)[10][:comments]['string']
+    output = "{{token.[10].[#comments].[\"string\"]}}"
 
+    expect(input.to_s).to eql output
+  end
 end

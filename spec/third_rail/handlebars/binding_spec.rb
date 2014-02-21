@@ -1,38 +1,11 @@
 require 'spec_helper'
 
-
-# Things that need to be considered:
-#
-# Conversion of underscored to camelCase?
-#
-# * double vs triple slash
-#
-#   {{foo}} vs  {{{foo}}}
-#
-# * block expressions
-#   {{#if cond}}
-#   {{else}}
-#   {{/end}}
-#
-# * paths and 'this' reference
-#
-#   {{foo.bar}}
-#   {{../derp}}
-#
-#   {{./name}} == {{this/name}} == {{this.name}}
-#
-# * iterator methods
-#
-#   {{@first}}, {{@last}}, {{@index}}, {{@key}}
-
-
-
 describe ThirdRail::Handlebars::Binding do
 
   # for the sake of clarity (and dealing with the odd behavior of ERB)
   # strip any whitespace that occurs between tokens
   def strip_whitespace(str)
-    str.gsub /([>}])\s+([<{])/, '\1\2'
+    str.gsub(/([>}])\s+([<{])/, '\1\2')
   end
 
   # build a template and render it.
@@ -45,22 +18,12 @@ describe ThirdRail::Handlebars::Binding do
     strip_whitespace(output)
   end
 
-
-  # it "converts under_scored references to camelCase"
-
   it "renders double-slashed expressions" do
     template = '<div><%= expression %></div>'
     output   = '<div>{{expression}}</div>'
 
     expect(render(template)).to eql output
   end
-
-  # it "renders triple-slashed expressions" do
-  #   template = Tilt::ERBTemplate.new { '<div><%= expression! %></div>' }
-  #   output   = '<div>{{{expression}}}</div>'
-
-  #   expect(template.render(subject)).to eql output
-  # end
 
   context "when rendering helper methods" do
     it "renders the complete expression" do
@@ -173,25 +136,4 @@ describe ThirdRail::Handlebars::Binding do
 
     expect(render(template)).to eql output
   end
-
-  # it "renders block expressions with reserved Ruby words"
-
-  # it "resolves paths"
-  #   # recursively detect chained calls??
-
-
-
-  # # {{#each articles.[10].[#comments]}}
-  # it "resolves expressions with segment-literal"
-
-
-  # it "resolves the 'this' reference according to a preference"
-
-  # it "renders iterator methods"
-  #   # block variable that prefixes first/etc with @ ?
-
-
-
-
-
 end

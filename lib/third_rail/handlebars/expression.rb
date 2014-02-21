@@ -3,12 +3,6 @@ module ThirdRail::Handlebars
 
     attr_reader :tokens, :args, :options, :block
 
-    # # use when calling chained expressions from binding
-    # def method_missing(token)
-    #   array_of_pre_called_literals << token
-    #   self
-    # end
-
     def initialize(first_token, *args)
       @tokens  = [first_token.to_s]
       @args    = args
@@ -19,12 +13,15 @@ module ThirdRail::Handlebars
       self
     end
 
-    # def to_hash
+    def [](arg_token)
+      tokens << case arg_token
+      when Symbol  then "[##{arg_token}]"
+      when String  then "[\"#{arg_token}\"]"
+      when Numeric then "[#{arg_token}]"
+      end
 
-    #   raise "Derp!"
-
-    #   nil
-    # end
+      self
+    end
 
     def to_literal
       tokens.first
