@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "tilt", "~> 2.0"
+  spec.add_dependency "erubis", "~> 2.7.0"
   spec.add_dependency "activemodel", ">= 4.0.0", "< 4.1"
   spec.add_dependency "actionpack", ">= 4.0.0", "< 4.1"
   spec.add_dependency "activesupport", ">= 4.0.0", "< 4.1"

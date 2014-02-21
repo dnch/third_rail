@@ -1,3 +1,4 @@
+require 'erubis'
 require 'tilt'
 
 require 'third_rail/version'
