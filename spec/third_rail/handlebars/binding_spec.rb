@@ -4,7 +4,7 @@ describe ThirdRail::Handlebars::Binding do
 
   # for the sake of clarity (and dealing with the odd behavior of ERB)
   # strip any whitespace that occurs between tokens
-  def strip_whitespace(str)
+  def compress_whitespace(str)
     str.gsub(/([>}])\s+([<{])/, '\1\2')
   end
 
@@ -15,14 +15,19 @@ describe ThirdRail::Handlebars::Binding do
     template = Tilt::ErubisTemplate.new(outvar: buffer_name, trim: true) { str }
     output   = template.render(described_class.new(outvar: buffer_name))
 
-    strip_whitespace(output)
+    compress_whitespace(output)
+  end
+
+  # Return an instance of Capybara::Node::Simple so we can be more declarative
+  # about what we're looking for rather than doing simple string comparisons
+  def render_fragment(str)
+    Capybara.string(render(str))
   end
 
   it "renders double-slashed expressions" do
-    template = '<div><%= expression %></div>'
-    output   = '<div>{{expression}}</div>'
+    f = render_fragment '<div><%= expression %></div>'
 
-    expect(render(template)).to eql output
+    expect(f.find('div')).to have_text('{{expression}}')
   end
 
   context "when rendering helper methods" do
@@ -58,7 +63,7 @@ describe ThirdRail::Handlebars::Binding do
       </div>
     OTPT
 
-    expect(render(template)).to eql strip_whitespace(output)
+    expect(render(template)).to eql compress_whitespace(output)
   end
 
   it "renders block expressions with an else condition" do
@@ -82,7 +87,7 @@ describe ThirdRail::Handlebars::Binding do
       </div>
     OTPT
 
-    expect(render(template)).to eql strip_whitespace(output)
+    expect(render(template)).to eql compress_whitespace(output)
   end
 
   # Keep in mind that handlebars doesn't actually allow full expressions
@@ -120,7 +125,7 @@ describe ThirdRail::Handlebars::Binding do
       </div>
     OTPT
 
-    expect(render(template)).to eql strip_whitespace(output)
+    expect(render(template)).to eql compress_whitespace(output)
   end
 
   it "renders chained expressions" do
