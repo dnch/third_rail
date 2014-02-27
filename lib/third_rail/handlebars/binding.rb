@@ -33,7 +33,7 @@ module ThirdRail::Handlebars
       end
     end
 
-    # Return self for any tokens that map to Ruby keywords (if, else, unless)
+    # Return self as a proxy for any tokens that map to Ruby keywords (if, else, unless)
     def __hb
       self
     end
@@ -43,12 +43,6 @@ module ThirdRail::Handlebars
     def _this
       Expression.new(:this)
     end
-
-    # # A special case; because this shouldn't be called as an output, we need to inject
-    # # it directly into our output buffer
-    # def _else
-    #   __buffer << Expression.new(:else)
-    # end
 
     private
 
