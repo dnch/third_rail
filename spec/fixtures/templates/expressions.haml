@@ -1,0 +1,14 @@
+-# it "renders double-braced expressions"
+%div#double-brace= expression
+
+-# it "renders helper expressions"
+%div#helper-expression= helper arg1, arg2
+
+-# it "renders argument literals"
+%div#argument-literal= helper arg1, "string-literal", 42, arg2
+
+-# it "renders chain expressions"
+%div#chain-expressions= author.firstName
+
+-# it "renders scope-resolution expressions"
+%div#scope-expressions= _this.firstName

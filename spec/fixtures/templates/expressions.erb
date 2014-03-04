@@ -1,0 +1,14 @@
+<!-- it "renders double-braced expressions" -->
+<div id="double-brace"><%= expression %></div>
+
+<!-- it "renders helper expressions" -->
+<div id="helper-expression"><%= helper arg1, arg2 %></div>
+
+<!-- it "renders argument literals" -->
+<div id="argument-literal"><%= helper arg1, "string-literal", 42, arg2 %></div>
+
+<!-- it "renders chain expressions" -->
+<div id="chain-expressions"><%= author.firstName %></div>
+
+<!-- it "renders scope-resolution expressions" -->
+<div id="scope-expressions"><%= _this.firstName %></div>

@@ -4,9 +4,6 @@ module ThirdRail::Handlebars
 
     def initialize(**args)
       @__args = args
-
-      # set up our Tilt output buffer
-      instance_variable_set(__args[:outvar], "")
     end
 
     # `method_missing` should only handle two things:
@@ -45,10 +42,6 @@ module ThirdRail::Handlebars
     end
 
     private
-
-    def __buffer
-      instance_variable_get(__args[:outvar])
-    end
 
     def __rebind(blk)
       self.class.new(__args).instance_eval(&blk)

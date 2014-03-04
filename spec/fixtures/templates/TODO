@@ -1,0 +1,61 @@
+  # it "renders block expressions with an else condition" do
+  #   template = <<-TMPL.strip_heredoc
+  #     <div>
+  #       <% list(people) do %>
+  #         <%= firstName %>
+  #       <% __hb.else %>
+  #         <%= lastName %>
+  #       <% end %>
+  #     </div>
+  #   TMPL
+
+  #   output = <<-OTPT.strip_heredoc
+  #     <div>
+  #       {{#list people}}
+  #         {{firstName}}
+  #       {{else}}
+  #         {{lastName}}
+  #       {{/list}}
+  #     </div>
+  #   OTPT
+
+  #   expect(render(template)).to eql compress_whitespace(output)
+  # end
+
+  # # Keep in mind that handlebars doesn't actually allow full expressions
+  # # for if / unless blocks, so we can get away with this sort of sneaky shit
+  # it "renders block expressions that map to ruby keywords" do
+  #   template = <<-TMPL.strip_heredoc
+  #     <div>
+  #       <% __hb.if(people) do %>
+  #         <%= firstName %>
+  #       <% __hb.else %>
+  #         <%= lastName %>
+  #       <% end %>
+
+  #       <% __hb.unless(people) do %>
+  #         <%= firstName %>
+  #       <% __hb.else %>
+  #         <%= lastName %>
+  #       <% end %>
+  #     </div>
+  #   TMPL
+
+  #   output = <<-OTPT.strip_heredoc
+  #     <div>
+  #       {{#if people}}
+  #         {{firstName}}
+  #       {{else}}
+  #         {{lastName}}
+  #       {{/if}}
+
+  #       {{#unless people}}
+  #         {{firstName}}
+  #       {{else}}
+  #         {{lastName}}
+  #       {{/unless}}
+  #     </div>
+  #   OTPT
+
+  #   expect(render(template)).to eql compress_whitespace(output)
+  # end
