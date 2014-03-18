@@ -28,24 +28,24 @@ module ThirdRail::Handlebars
     end
 
     def to_str(&block)
-      String.new.tap do |s|
-        s << "{{"
-        s << "#" if block_given?
-        s << tokens.join(".")
+      String.new.tap do |str|
+        str << "{{"
+        str << "#" if block_given?
+        str << tokens.join(".")
 
         unless args.empty?
-          s << " "
-          s << args.map { |a| escape_arg(a) }.join(" ")
+          str << " "
+          str << args.map { |a| escape_arg(a) }.join(" ")
         end
 
-        s << "}}"
+        str << "}}"
 
         if block_given?
-          s << yield
-          s << "{{"
-          s << "/"
-          s << tokens.join(".")
-          s << "}}"
+          str << yield
+          str << "{{"
+          str << "/"
+          str << tokens.join(".")
+          str << "}}"
         end
       end
     end
