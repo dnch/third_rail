@@ -4,7 +4,7 @@ module ThirdRail::Handlebars
     attr_reader :tokens, :args, :options, :block
 
     def initialize(first_token, *args)
-      @tokens  = [first_token.to_s]
+      @tokens  = [first_token.to_s.gsub(/^#{ThirdRail::Handlebars.keyword_prefix}/, '')]
       @args    = args
     end
 
